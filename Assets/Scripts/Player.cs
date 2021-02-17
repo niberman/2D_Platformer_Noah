@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
+        Flip(horizontal);
     }
 
     public void HandleMovement(float horizontal)
@@ -41,12 +42,19 @@ public class Player : MonoBehaviour
         if(facingRight == true && horizontal < 0)
         {
             facingRight = !facingRight;
-            return;
+            Vector2 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
+        else if(facingRight == false && horizontal > 0)
+        {
+            facingRight = !facingRight;
+            Vector2 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
     /*Update runs once per frame, fixed update runs as many times per frame as you want
      * fixed update works with the physics engine, so while using a rigidbody, you should use fixed
      */
-
-
 }
