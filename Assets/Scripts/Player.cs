@@ -6,9 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D myRigidbody;
 
-    [SerializeField]
-
-    private float movementSpeed;
+    [SerializeField] private float movementSpeed;
 
     private bool facingRight;
 
