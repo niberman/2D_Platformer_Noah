@@ -12,11 +12,15 @@ public class Player : MonoBehaviour
 
     private bool facingRight;
 
+    private Animator myAnimator;
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         facingRight = true;
+
+        myAnimator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -35,6 +39,7 @@ public class Player : MonoBehaviour
     public void HandleMovement(float horizontal)
     {
         myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
+        myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
     }
 
     private void Flip(float horizontal)
