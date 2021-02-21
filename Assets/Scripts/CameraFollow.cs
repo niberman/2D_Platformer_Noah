@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public float xMin;
     public float xMax;
-    public float yMin;
+    public float xMin;
     public float yMax;
+    public float yMin;
 
     private GameObject cameraTarget;
     private Transform target;
@@ -25,5 +25,7 @@ public class CameraFollow : MonoBehaviour
         target = cameraTarget.transform;
         transform.position = new Vector3(Mathf.Clamp(target.position.x, xMin, xMax),
             Mathf.Clamp(target.position.y, yMin, yMax), transform.position.z);
+
+        Debug.Log(target.transform.position);
     }
 }
