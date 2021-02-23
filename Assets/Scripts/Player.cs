@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     private bool facingRight;
 
     private Animator myAnimator;
-    // Start is called before the first frame update
+
+    private bool attack;
+
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -21,23 +23,33 @@ public class Player : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
         Flip(horizontal);
+        HandleInput();
+        HandleAttacks();
+        ResetValues();
     }
 
     public void HandleMovement(float horizontal)
     {
         myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
+    }
+
+    void HandleAttacks()
+    {
+        if(attack == true)
+            myAnimator.SetTrigger("attack");
+        
+    }
+
+    void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            attack = true;
     }
 
     private void Flip(float horizontal)
@@ -56,6 +68,11 @@ public class Player : MonoBehaviour
             theScale.x *= -1;
             transform.localScale = theScale;
         }
+    }
+
+    private void ResetValues()
+    {
+        attack = false;
     }
     /*Update runs once per frame, fixed update runs as many times per frame as you want
      * fixed update works with the physics engine, so while using a rigidbody, you should use fixed
