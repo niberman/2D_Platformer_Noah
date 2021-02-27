@@ -35,15 +35,24 @@ public class Player : MonoBehaviour
 
     public void HandleMovement(float horizontal)
     {
-        myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
+        if(!this.myAnimator.GetCurrentAnimatorStateInfo (0).IsTag("Attack"))
+        {
+            myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
+            
+
+        }
+
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
     }
 
     void HandleAttacks()
     {
         if(attack == true)
+        {
             myAnimator.SetTrigger("attack");
-        
+            myRigidbody.velocity = Vector2.zero;
+        }
+            
     }
 
     void HandleInput()
