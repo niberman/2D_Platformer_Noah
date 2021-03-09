@@ -39,12 +39,12 @@ public class Player : MonoBehaviour
         if(!this.myAnimator.GetCurrentAnimatorStateInfo (0).IsTag("Attack"))
             myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
 
-      
+        
         if (slide == true && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("slide"))
         {
             myAnimator.SetBool("slide", true);
         }
-        else if(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("slide"))
+        else if(this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("slide"))
         {
             myAnimator.SetBool("slide", false);
         }
@@ -66,8 +66,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             attack = true;
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Debug.Log("lshift pressed");
             slide = true;
+        }
     }
 
     private void Flip(float horizontal)
