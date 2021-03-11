@@ -34,25 +34,20 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
         Flip(horizontal);
-        //HandleInput();
         HandleAttacks();
         ResetValues();
     }
 
     public void HandleMovement(float horizontal)
     {
-        if(!myAnimator.GetBool("slide") && !this.myAnimator.GetCurrentAnimatorStateInfo (0).IsTag("Attack"))
+        if(!myAnimator.GetBool("slide") && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
             myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
-
         
         if (slide == true && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
-        {
             myAnimator.SetBool("slide", true);
-        }
+        
         else if(this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
-        {
             myAnimator.SetBool("slide", false);
-        }
 
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
 
@@ -81,13 +76,14 @@ public class Player : MonoBehaviour
 
     private void Flip(float horizontal)
     {
-        if(myAnimator.GetBool("slide") == false && facingRight == true && horizontal < 0 || myAnimator.GetBool("slide") == false && facingRight == false && horizontal > 0)
+        if(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide") && (facingRight == true && horizontal < 0
+            || facingRight == false && horizontal > 0))
         {
+            //myAnimator.SetBool("slide", false);
             facingRight = !facingRight;
             Vector2 theScale = transform.localScale;
             theScale.x *= -1;
-            transform.localScale = theScale;
-            
+            transform.localScale = theScale;  
         }
     }
 
