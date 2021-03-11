@@ -19,9 +19,14 @@ public class Player : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         facingRight = true;
-
+        
         myAnimator = GetComponent<Animator>();
 
+    }
+
+    private void Update()
+    {
+        HandleInput();
     }
 
     void FixedUpdate()
@@ -29,22 +34,22 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         HandleMovement(horizontal);
         Flip(horizontal);
-        HandleInput();
+        //HandleInput();
         HandleAttacks();
         ResetValues();
     }
 
     public void HandleMovement(float horizontal)
     {
-        if(!this.myAnimator.GetCurrentAnimatorStateInfo (0).IsTag("Attack"))
+        if(!myAnimator.GetBool("slide") && !this.myAnimator.GetCurrentAnimatorStateInfo (0).IsTag("Attack"))
             myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
 
         
-        if (slide == true && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("slide"))
+        if (slide == true && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             myAnimator.SetBool("slide", true);
         }
-        else if(this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("slide"))
+        else if(this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             myAnimator.SetBool("slide", false);
         }
@@ -76,19 +81,13 @@ public class Player : MonoBehaviour
 
     private void Flip(float horizontal)
     {
-        if(facingRight == true && horizontal < 0)
+        if(myAnimator.GetBool("slide") == false && facingRight == true && horizontal < 0 || myAnimator.GetBool("slide") == false && facingRight == false && horizontal > 0)
         {
             facingRight = !facingRight;
             Vector2 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
-        }
-        else if(facingRight == false && horizontal > 0)
-        {
-            facingRight = !facingRight;
-            Vector2 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+            
         }
     }
 
