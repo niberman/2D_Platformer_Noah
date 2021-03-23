@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Debug.Log("lshift pressed");
+            //Debug.Log("lshift pressed");
             slide = true;
         }
     }
