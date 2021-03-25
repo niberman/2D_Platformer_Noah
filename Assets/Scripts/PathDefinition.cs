@@ -6,10 +6,34 @@ using UnityEngine;
 public class PathDefinition : MonoBehaviour
 {
     public Transform[] Points;
+    public int direction = 1;
+    public int index = 0;
 
     public IEnumerator<Transform> GetPathsEnumerator()
     {
-        throw new NotImplementedException();
+        if (Points.Length < 1)
+            yield break;
+
+        while (true)
+        {
+            yield return Points[index];
+
+            if(Points.Length == 1)
+            {
+                continue;
+            }
+
+            if(index <= 0)
+            {
+                direction = 1;
+            }
+            else if(index >= Points.Length - 1)
+            {
+                direction = -1;
+            }
+
+            index = index + direction;
+        }
     }
 
     public void OnDrawGizmos()
@@ -18,9 +42,7 @@ public class PathDefinition : MonoBehaviour
             return;
 
         for (int i = 0; Points.Length < 2; i++)
-        {
             Gizmos.DrawLine(Points[i - 1].position, Points[i].position);
-        }
 
     }
 }

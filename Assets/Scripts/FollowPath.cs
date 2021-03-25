@@ -18,14 +18,4 @@ public class FollowPath : MonoBehaviour
 
     private IEnumerator<Transform> _currentPoint;
 
-    public void Start()
-    {
-
-    }
-
-    public void Update()
-    {
-
-    }
-
 }
