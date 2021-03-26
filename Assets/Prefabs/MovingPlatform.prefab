@@ -346,14 +346,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   pointNumber: 0
   tolerance: 0
-  speed: 0
-  delayTimer: 0
-  automatic: 0
+  speed: 5
+  delayTimer: 1
+  automatic: 1
 --- !u!61 &129494347240775084
 BoxCollider2D:
   m_ObjectHideFlags: 0

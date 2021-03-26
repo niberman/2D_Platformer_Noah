@@ -10,6 +10,7 @@ public class MovingPlatform : MonoBehaviour
 
     //public Vector3[] points;
     public GameObject[] points;
+    //public Transform[] pointTransform;
     public int pointNumber = 0;
     private Vector3 currentTarget;
 
@@ -23,17 +24,17 @@ public class MovingPlatform : MonoBehaviour
 
     private void Start()
     {
-        if(points.Length > 0)
+        if (points.Length > 0)
         {
-            //currentTarget = points.Length == 0; //error
-            currentTarget = 
+            //currentTarget = points[0];
+            currentTarget = points[0].transform.position;
         }
         tolerance = speed * Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
-        if(transform.position != currentTarget)
+        if (transform.position != currentTarget)
             MovePlatform();
         else
             UpdateTarget();
@@ -44,7 +45,7 @@ public class MovingPlatform : MonoBehaviour
         Vector3 heading = currentTarget - transform.position;
         transform.position += (heading / heading.magnitude) * speed * Time.deltaTime;
 
-        if(heading.magnitude < tolerance)
+        if (heading.magnitude < tolerance)
         {
             transform.position = currentTarget;
             delayStart = Time.time;
@@ -65,7 +66,7 @@ public class MovingPlatform : MonoBehaviour
             pointNumber = 0;
 
         // currentTarget = points[pointNumber]; //error
-        currentTarget = 
+        currentTarget = points[pointNumber].transform.position;
     }
 
     private void OnTriggerEnter(Collider other)

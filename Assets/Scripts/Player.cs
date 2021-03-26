@@ -95,4 +95,14 @@ public class Player : MonoBehaviour
     /*Update runs once per frame, fixed update runs as many times per frame as you want
      * fixed update works with the physics engine, so while using a rigidbody, you should use fixed
      */
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        
+    }
 }
