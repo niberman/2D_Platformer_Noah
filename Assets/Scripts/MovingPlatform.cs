@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public Vector3[] points;
+    /* Task
+     * convert vector3 points array to gameobject array
+     * be able to drag and drop gameobject into platform to get transform*/
+
+    //public Vector3[] points;
+    public GameObject[] points;
     public int pointNumber = 0;
     private Vector3 currentTarget;
 
@@ -20,7 +25,8 @@ public class MovingPlatform : MonoBehaviour
     {
         if(points.Length > 0)
         {
-            currentTarget = points[0];
+            //currentTarget = points.Length == 0; //error
+            currentTarget = 
         }
         tolerance = speed * Time.deltaTime;
     }
@@ -58,7 +64,8 @@ public class MovingPlatform : MonoBehaviour
         if (pointNumber >= points.Length)
             pointNumber = 0;
 
-        currentTarget = points[pointNumber];
+        // currentTarget = points[pointNumber]; //error
+        currentTarget = 
     }
 
     private void OnTriggerEnter(Collider other)
