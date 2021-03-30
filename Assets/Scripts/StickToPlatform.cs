@@ -4,37 +4,20 @@ using UnityEngine;
 
 public class StickToPlatform : MonoBehaviour
 {
+    public GameObject platform;
+    public GameObject player;
 
-    Rigidbody body;
-    Transform collidedObject;
-
-    void OnCollisionEnter(Collision collision)
+    void Start()
     {
-        colliedObject = collison.transform;
-        if (!body)
-        {
-            if (collision.gameobject.GetComponent<Rigidbody>())
-            {
-                body = collision.gameobject.GetComponent<Rigidbody>();
-            }
-        }
-        if (body)
-            body.isKinematic = true;
-        this.gameobject.transform.setparent(collision.gameobject.transform);
+
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        player.transform.position = new Vector2(platform.transform.position.x, platform.transform.position.y);
     }
 
-    void Update()
+    void OnTriggerExit2D(Collider2D collision)
     {
-
-        if (collidedObject)
-        {
-            collidedObject.parent = null;
-            if (body)
-            {
-                body.isKinematic = false;
-                body = null;
-            }
-        }
-
+        player.transform.position = player.transform.position;
     }
 }

@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D myRigidbody;
 
+
+
     [SerializeField] private float movementSpeed;
 
     private bool facingRight;
@@ -19,7 +21,7 @@ public class Player : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         facingRight = true;
-        
+
         myAnimator = GetComponent<Animator>();
 
     }
@@ -40,13 +42,13 @@ public class Player : MonoBehaviour
 
     public void HandleMovement(float horizontal)
     {
-        if(!myAnimator.GetBool("slide") && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if (!myAnimator.GetBool("slide") && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
             myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
-        
+
         if (slide == true && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
             myAnimator.SetBool("slide", true);
-        
-        else if(this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
+
+        else if (this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
             myAnimator.SetBool("slide", false);
 
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour
 
     void HandleAttacks()
     {
-        if(attack == true)
+        if (attack == true)
         {
             myAnimator.SetTrigger("attack");
             myRigidbody.velocity = Vector2.zero;
@@ -76,14 +78,14 @@ public class Player : MonoBehaviour
 
     private void Flip(float horizontal)
     {
-        if(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide") && (facingRight == true && horizontal < 0
+        if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide") && (facingRight == true && horizontal < 0
             || facingRight == false && horizontal > 0))
         {
             //myAnimator.SetBool("slide", false);
             facingRight = !facingRight;
             Vector2 theScale = transform.localScale;
             theScale.x *= -1;
-            transform.localScale = theScale;  
+            transform.localScale = theScale;
         }
     }
 
@@ -96,13 +98,5 @@ public class Player : MonoBehaviour
      * fixed update works with the physics engine, so while using a rigidbody, you should use fixed
      */
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        collision.gameObject.transform.parent = gameObject.transform;
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        
-    }
 }
