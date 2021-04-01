@@ -6,8 +6,6 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D myRigidbody;
 
-
-
     [SerializeField] private float movementSpeed;
 
     private bool facingRight;
@@ -81,7 +79,6 @@ public class Player : MonoBehaviour
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide") && (facingRight == true && horizontal < 0
             || facingRight == false && horizontal > 0))
         {
-            //myAnimator.SetBool("slide", false);
             facingRight = !facingRight;
             Vector2 theScale = transform.localScale;
             theScale.x *= -1;
@@ -94,9 +91,9 @@ public class Player : MonoBehaviour
         attack = false;
         slide = false;
     }
+
     /*Update runs once per frame, fixed update runs as many times per frame as you want
      * fixed update works with the physics engine, so while using a rigidbody, you should use fixed
      */
-
 
 }

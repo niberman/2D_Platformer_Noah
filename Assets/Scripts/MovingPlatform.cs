@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    /* Task
+    /* Task - done
      * convert vector3 points array to gameobject array
      * be able to drag and drop gameobject into platform to get transform*/
 
@@ -69,12 +69,13 @@ public class MovingPlatform : MonoBehaviour
         currentTarget = points[pointNumber].transform.position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    //makes player stick supposedly
+    private void OnTriggerEnter2D(Collider2D other)
     {
         other.transform.parent = transform;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         other.transform.parent = null;
     }
