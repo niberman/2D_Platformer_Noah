@@ -7,6 +7,12 @@ public class BarrelCollection : MonoBehaviour
     public int speed;
     private bool pickedUp = false;
 
+    public AudioSource sound;
+
+    void Start()
+    {
+    }
+
     void FixedUpdate()
     {
         transform.Rotate(Vector3.forward * speed);
@@ -19,6 +25,7 @@ public class BarrelCollection : MonoBehaviour
             if (!pickedUp)
                 pickedUp = true;
 
+            sound.Play();
             Destroy(gameObject, 0.1f);
         }
     }
