@@ -11,6 +11,13 @@ public class Player : MonoBehaviour
     private bool facingRight;
 
     private Animator myAnimator;
+    [SerializeField] private Transform[] groundPoints;
+    [SerializeField] private float groundRadius;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private bool airControl;
+    [SerializeField] private bool isGrounded;
+    [SerializeField] private bool jump;
 
     private bool attack;
     private bool slide;
@@ -36,11 +43,13 @@ public class Player : MonoBehaviour
         Flip(horizontal);
         HandleAttacks();
         ResetValues();
+        isGrounded = IsGrounded();
     }
 
     public void HandleMovement(float horizontal)
     {
-        if (!myAnimator.GetBool("slide") && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if (!myAnimator.GetBool("slide") &&
+            !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
             myRigidbody.velocity = new Vector2(horizontal * movementSpeed, myRigidbody.velocity.y);
 
         if (slide == true && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
@@ -50,6 +59,14 @@ public class Player : MonoBehaviour
             myAnimator.SetBool("slide", false);
 
         myAnimator.SetFloat("speed", Mathf.Abs(horizontal));
+
+        if (jump == true && isGrounded == true)
+        {
+            isGrounded = false;
+            myRigidbody.AddForce(new Vector2(0, jumpForce));
+
+        }
+
 
     }
 
@@ -68,15 +85,18 @@ public class Player : MonoBehaviour
             attack = true;
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            //Debug.Log("lshift pressed");
             slide = true;
-        }
+
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            jump = true;
+
     }
 
     private void Flip(float horizontal)
     {
-        if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide") && (facingRight == true && horizontal < 0
+        if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide")
+            && (facingRight == true && horizontal < 0
             || facingRight == false && horizontal > 0))
         {
             facingRight = !facingRight;
@@ -86,14 +106,31 @@ public class Player : MonoBehaviour
         }
     }
 
+    private bool IsGrounded()
+    {
+        if (myRigidbody.velocity.y <= 0)
+        {
+            foreach (Transform point in groundPoints)
+            {
+                Collider2D[] colliders =
+                    Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGround);
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    if (colliders[i].gameObject != gameObject)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private void ResetValues()
     {
         attack = false;
         slide = false;
+        jump = false;
     }
-
-    /*Update runs once per frame, fixed update runs as many times per frame as you want
-     * fixed update works with the physics engine, so while using a rigidbody, you should use fixed
-     */
 
 }
