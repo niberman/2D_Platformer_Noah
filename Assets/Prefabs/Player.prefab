@@ -232,8 +232,8 @@ MonoBehaviour:
   - {fileID: 1656243407}
   - {fileID: 1421944083292358337}
   - {fileID: 1584227304}
-  groundRadius: 0.01
-  jumpForce: 10
+  groundRadius: 0.25
+  jumpForce: 500
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295

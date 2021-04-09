@@ -39,11 +39,12 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
+        isGrounded = IsGrounded();
+
         HandleMovement(horizontal);
         Flip(horizontal);
         HandleAttacks();
         ResetValues();
-        isGrounded = IsGrounded();
     }
 
     public void HandleMovement(float horizontal)
@@ -64,10 +65,13 @@ public class Player : MonoBehaviour
         {
             isGrounded = false;
             myRigidbody.AddForce(new Vector2(0, jumpForce));
-
         }
 
-
+        if (slide != true && attack != true)
+        {
+            isGrounded = true;
+            airControl = true;
+        }
     }
 
     void HandleAttacks()
@@ -81,14 +85,13 @@ public class Player : MonoBehaviour
 
     void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
             attack = true;
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             slide = true;
 
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W))
             jump = true;
 
     }
